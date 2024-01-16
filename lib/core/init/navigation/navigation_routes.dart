@@ -1,6 +1,7 @@
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/features/home/view/home_view.dart';
 import 'package:chat_app/features/signin/view/signin_view.dart';
+import 'package:chat_app/features/splash/view/splash_view.dart';
 import 'package:flutter/material.dart';
 
 class NavigationRoute {
@@ -13,8 +14,12 @@ class NavigationRoute {
     switch (args.name) {
       case NavigationConstants.DEFAULT:
         return normalNavigate(const SignInView());
+      case NavigationConstants.SPLASH:
+        return normalNavigate(const SplashView());
       case NavigationConstants.HOME:
         return normalNavigate(const HomeView());
+      case NavigationConstants.SIGNIN:
+        return normalNavigate(const SignInView());
       default:
         return normalNavigate(const HomeView());
     }
