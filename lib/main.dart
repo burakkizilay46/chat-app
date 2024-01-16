@@ -1,7 +1,6 @@
 import 'package:chat_app/core/init/navigation/navigation_routes.dart';
 import 'package:chat_app/core/init/navigation/navigation_service.dart';
 
-import 'package:chat_app/features/signin/view/signin_view.dart';
 import 'package:chat_app/features/splash/view/splash_view.dart';
 import 'package:flutter/material.dart';
 
