@@ -1,5 +1,6 @@
 import 'package:chat_app/core/constants/image/image_constants.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
+import 'package:chat_app/core/init/network/auth/google_signin.dart';
 import 'package:flutter/material.dart';
 
 class SignInView extends StatelessWidget {
@@ -20,7 +21,9 @@ class SignInView extends StatelessWidget {
                 style: context.normalTextStyle.copyWith(fontSize: 32, color: context.appWhite),
               ),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await signInWithGoogle();
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
