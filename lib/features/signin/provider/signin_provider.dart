@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:chat_app/core/base/provider/base_provider.dart';
+import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/core/init/network/auth/google_signin.dart';
 
 class SignInProvider extends BaseProvider {
@@ -11,10 +12,7 @@ class SignInProvider extends BaseProvider {
 
   Future<void> signIn() async {
     try {
-      final response = await signInWithGoogle();
-      _pictureUrl = response.user!.photoURL!;
-      print(_pictureUrl);
-      notifyListeners();
+      await signInWithGoogle().then((value) => navigation.navigateToPage(path: NavigationConstants.HOME));
     } catch (error) {
       print(error);
     }
