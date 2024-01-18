@@ -4,9 +4,11 @@ import 'package:chat_app/core/init/navigation/navigation_service.dart';
 import 'package:chat_app/features/splash/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  await Hive.initFlutter();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
