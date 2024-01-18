@@ -4,5 +4,4 @@ import 'package:flutter/widgets.dart';
 abstract class BaseProvider extends ChangeNotifier {
   BuildContext? context;
   NavigationService navigation = NavigationService.instance;
-  void setContext(BuildContext context);
 }
