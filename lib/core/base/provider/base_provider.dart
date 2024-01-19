@@ -1,7 +1,9 @@
 import 'package:chat_app/core/init/navigation/navigation_service.dart';
 import 'package:flutter/widgets.dart';
 
-abstract class BaseProvider extends ChangeNotifier {
+abstract class BaseProvider {
   BuildContext? context;
+
   NavigationService navigation = NavigationService.instance;
+  void setContext(BuildContext context);
 }
