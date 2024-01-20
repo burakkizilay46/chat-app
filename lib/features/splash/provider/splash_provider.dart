@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class SplashProvider extends BaseProvider with ChangeNotifier {
+class SplashProvider extends BaseProvider {
   @override
   void setContext(BuildContext context) => this.context = context;
 

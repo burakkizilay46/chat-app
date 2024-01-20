@@ -12,10 +12,11 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<SignInProvider>(
       provider: SignInProvider(),
-      onProviderReady: (provider) {
-        provider.setContext(context);
-      },
-      onPageBuilder: Scaffold(
+      onProviderReady: (provider) {},
+      child: Center(
+        child: Text('Test'),
+      ),
+      builder: (context, model, child) => Scaffold(
         backgroundColor: context.appColor,
         body: Center(
           child: Padding(

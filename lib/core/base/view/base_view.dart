@@ -1,20 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class BaseView<T extends ChangeNotifier> extends StatefulWidget {
   final T provider;
   final Function(T model) onProviderReady;
-  final Widget onPageBuilder;
+  final Widget Function(BuildContext context, T model, Widget? child) builder;
+  final Widget child;
   final Function(T model)? onDispose;
 
   const BaseView({
     Key? key,
     required this.provider,
     required this.onProviderReady,
-    required this.onPageBuilder,
+    required this.builder,
+    required this.child,
     this.onDispose,
   }) : super(key: key);
 
@@ -40,9 +41,12 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => widget.provider,
-      child: widget.onPageBuilder,
+    return ChangeNotifierProvider<T>.value(
+      value: provider,
+      child: Consumer<T>(
+        builder: widget.builder,
+        child: widget.child,
+      ),
     );
   }
 }

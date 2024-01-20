@@ -7,7 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class SignInProvider extends BaseProvider with ChangeNotifier {
+class SignInProvider extends BaseProvider {
   @override
   void setContext(BuildContext context) => this.context = context;
 
