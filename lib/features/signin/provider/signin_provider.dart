@@ -22,4 +22,9 @@ class SignInProvider extends BaseProvider {
       print(error);
     }
   }
+
+  @override
+  void init() {
+    // TODO: implement init
+  }
 }

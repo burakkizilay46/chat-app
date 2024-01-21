@@ -5,5 +5,6 @@ abstract class BaseProvider extends ChangeNotifier {
   BuildContext? context;
 
   NavigationService navigation = NavigationService.instance;
+  void init();
   void setContext(BuildContext context);
 }
