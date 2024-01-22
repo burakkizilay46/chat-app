@@ -14,7 +14,7 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView(
         provider: SignInProvider(),
-        onProviderReady: (provider) {
+        onProviderReady: (SignInProvider provider) {
           provider.init();
           provider.setContext(context);
         },

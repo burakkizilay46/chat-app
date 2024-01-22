@@ -14,7 +14,7 @@ class SignInProvider extends BaseProvider with ChangeNotifier {
   Future<void> signIn() async {
     try {
       await signInWithGoogle().then((value) {
-        context!.read<UserProvider>().saveUserInfos(value.user!);
+        this.context!.read<UserProvider>().saveUserInfos(value.user!);
         navigation.navigateToPage(path: NavigationConstants.HOME);
         notifyListeners();
       });

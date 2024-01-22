@@ -37,13 +37,9 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: widget.provider,
-      child: Builder(
-        builder: (context) {
-          return widget.onPageBuilder(provider) as Widget;
-        },
-      ),
+    return ChangeNotifierProvider(
+      create: (context) => widget.provider,
+      child: widget.onPageBuilder(provider) as Widget,
     );
   }
 }
