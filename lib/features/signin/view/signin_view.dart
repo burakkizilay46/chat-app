@@ -15,8 +15,8 @@ class SignInView extends StatelessWidget {
     return BaseView(
         provider: SignInProvider(),
         onProviderReady: (SignInProvider provider) {
-          provider.init();
           provider.setContext(context);
+          provider.init();
         },
         onPageBuilder: (SignInProvider provider) => Scaffold(
               backgroundColor: context.appColor,
@@ -30,7 +30,7 @@ class SignInView extends StatelessWidget {
                         child: Row(
                           children: [
                             SizedBox(height: 24, child: Image.asset(ImageConstants.instance.googleLogo)),
-                            Text('Sign in with Google')
+                            const Text('Sign in with Google')
                           ],
                         ))
                   ],

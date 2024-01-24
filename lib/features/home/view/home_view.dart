@@ -1,6 +1,4 @@
-import 'package:chat_app/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,7 +15,7 @@ class _HomeViewState extends State<HomeView> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('${context.watch<UserProvider>().currentUser.displayName}')],
+          children: [Text('Giriş yaptın yavşak')],
         ),
       ),
     );

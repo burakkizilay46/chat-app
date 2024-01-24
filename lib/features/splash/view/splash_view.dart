@@ -1,4 +1,3 @@
-import 'package:chat_app/core/constants/image/image_constants.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 import 'package:chat_app/features/splash/provider/splash_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +20,7 @@ class _SplashContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: unused_local_variable
     final splashProvider = Provider.of<SplashProvider>(context);
     return Scaffold(
       backgroundColor: context.appColor,
