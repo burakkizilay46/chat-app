@@ -1,29 +1,39 @@
+import 'package:chat_app/core/constants/cache/cache_constants.dart';
+import 'package:chat_app/user/model/user_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-abstract class ICacheManager<T> {
-  final String key;
+class BaseCacheManager<T> {
   Box<T>? _box;
+  final CacheBoxNames boxName;
 
-  ICacheManager(this.key);
-  Future<void> init() async {
-    registerAdapters();
+  BaseCacheManager(this.boxName);
+
+  Future<void> openBox() async {
+    registerAdaptor();
     if (!(_box?.isOpen ?? false)) {
-      _box = await Hive.openBox(key);
+      _box = await Hive.openBox<T>(boxName.name);
     }
   }
 
-  void registerAdapters();
-
-  Future<void> clearAll() async {
-    await _box?.clear();
+  registerAdaptor() {
+    Hive.registerAdapter(UserModelAdapter());
   }
 
-  Future<void> addItems(List<T> items);
-  Future<void> putItems(List<T> items);
+  Future<void> updateItem(dynamic key, T val) async {
+    await _box?.put(key, val);
+  }
 
-  T? getItem(String key);
-  List<T>? getValues();
+  T? getItem(dynamic key) {
+    return _box?.get(key);
+  }
 
-  Future<void> putItem(String key, T item);
-  Future<void> removeItem(String key);
+  List<T>? getAllItems() {
+    return _box?.values.toList();
+  }
+
+  saveAllItems(List<T>? items) {
+    if (items != null) {
+      _box?.addAll(items);
+    }
+  }
 }
