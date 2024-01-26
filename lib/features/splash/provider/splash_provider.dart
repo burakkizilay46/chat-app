@@ -20,6 +20,15 @@ class SplashProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> navigateToPages() async {
-    await navigation.navigateToPageClear(path: NavigationConstants.SAMPLE);
+    bool userIsLogged = false;
+    var box = await Hive.openBox('isLogged');
+    /* box.put('isLogged', false); */
+    userIsLogged = await box.get('isLogged');
+
+    userIsLogged
+        ? await navigation.navigateToPageClear(path: NavigationConstants.HOME)
+        : await navigation.navigateToPageClear(path: NavigationConstants.SIGNIN);
+
+    box.close();
   }
 }

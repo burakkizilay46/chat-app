@@ -23,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
       onPageBuilder: (UserProvider provider) => Scaffold(
         appBar: AppBar(
           title: Text(
-            context.read<UserProvider>().currentUser.uid,
+            context.read<UserProvider>().currentUser.uid.toString(),
             style: context.normalTextStyle.copyWith(fontSize: 14),
           ),
           actions: [
@@ -31,7 +31,7 @@ class _HomeViewState extends State<HomeView> {
               radius: 24,
               child: ClipOval(
                 child: Image.network(
-                  context.read<UserProvider>().currentUser.photoURL.toString(),
+                  context.read<UserProvider>().currentUser.photoUrl.toString(),
                   fit: BoxFit.cover, // You can adjust the BoxFit property as needed.
                 ),
               ),
