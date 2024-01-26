@@ -21,10 +21,15 @@ class _HomeViewState extends State<HomeView> {
       },
       onPageBuilder: (UserProvider provider) => Scaffold(
         appBar: AppBar(
-          actions: [],
+          actions: [
+            CircleAvatar(
+              radius: 32,
+              child: Image.network(context.read<UserProvider>().currentUser.photoURL.toString()),
+            )
+          ],
         ),
         body: Center(
-          child: Text(context.watch<UserProvider>().currentUser.displayName.toString()),
+          child: Text(context.read<UserProvider>().currentUser.uid),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:chat_app/core/constants/image/image_constants.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 
 import 'package:chat_app/features/signin/provider/signin_provider.dart';
+import 'package:chat_app/user/provider/user_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class SignInView extends StatelessWidget {
                   children: [
                     Text('sign in', style: context.normalTextStyle.copyWith(fontSize: 32, color: context.appWhite)),
                     ElevatedButton(
-                        onPressed: () => context.read<SignInProvider>().signIn(),
+                        onPressed: () => context.read<UserProvider>().signIn(),
                         child: Row(
                           children: [
                             SizedBox(height: 24, child: Image.asset(ImageConstants.instance.googleLogo)),
