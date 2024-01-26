@@ -1,7 +1,7 @@
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/core/init/network/auth/google_signin.dart';
-import 'package:chat_app/user/model/user_model.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/widgets.dart';
@@ -19,6 +19,7 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> signIn() async {
     try {
       signInWithGoogle().then((value) {
+        print(value.user.runtimeType);
         _currentUser = value.user!;
         navigation.navigateToPage(path: NavigationConstants.HOME);
         notifyListeners();
@@ -29,9 +30,7 @@ class UserProvider extends BaseProvider with ChangeNotifier {
     }
   }
 
-  Future<void> cacheUser(UserModel user) async {
-    /*  Box<UserModel> userBox = Hive.box<UserModel>('userBox');
-    await userBox.add(user); */
+  Future<void> saveCurrentUser(User user) async {
     notifyListeners();
   }
 

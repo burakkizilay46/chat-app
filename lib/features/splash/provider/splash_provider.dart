@@ -20,6 +20,6 @@ class SplashProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> navigateToPages() async {
-    await navigation.navigateToPageClear(path: NavigationConstants.SIGNIN);
+    await navigation.navigateToPageClear(path: NavigationConstants.SAMPLE);
   }
 }
