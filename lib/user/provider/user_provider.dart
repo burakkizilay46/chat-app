@@ -4,6 +4,7 @@ import 'package:chat_app/core/init/network/auth/google_signin.dart';
 import 'package:chat_app/user/model/user_model.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -26,7 +27,8 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> signIn() async {
     try {
       await signInWithGoogle().then((value) async {
-        userIsLogin();
+        userIsLogin(true);
+        getCurrentUser();
         navigation.navigateToPage(path: NavigationConstants.HOME);
         notifyListeners();
       });
@@ -36,9 +38,16 @@ class UserProvider extends BaseProvider with ChangeNotifier {
     }
   }
 
-  Future<void> userIsLogin() async {
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut().then((value) {
+      userIsLogin(false);
+      navigation.navigateToPageClear(path: NavigationConstants.SIGNIN);
+    });
+  }
+
+  Future<void> userIsLogin(bool loginValue) async {
     box = await Hive.openBox('isLogged');
-    await box!.put('isLogged', true);
+    await box!.put('isLogged', loginValue);
   }
 
   void getCurrentUser() {

@@ -1,5 +1,7 @@
 import 'package:chat_app/core/base/view/base_view.dart';
+import 'package:chat_app/core/components/chat_bubble/chat_bubble_view.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
+import 'package:chat_app/user/provider/chat_provider.dart';
 import 'package:chat_app/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +11,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controller = TextEditingController();
     return BaseView(
       provider: UserProvider(),
       onProviderReady: (UserProvider provider) {
@@ -31,10 +34,38 @@ class HomeView extends StatelessWidget {
                 ),
               ),
             ),
+            IconButton(onPressed: () => context.read<UserProvider>().signOut(), icon: Icon(Icons.logout)),
             SizedBox(width: 8)
           ],
         ),
-        body: Center(),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: context.watch<ChatProvider>().messages.length,
+                itemBuilder: (context, index) {
+                  var alignment = index % 2 == 0 ? Alignment.centerRight : Alignment.centerLeft;
+                  return ChatBubble(message: context.watch<ChatProvider>().messages[index], isSender: index % 2 == 0);
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                    ),
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () => context.read<ChatProvider>().sendMessage(_controller.text))
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
