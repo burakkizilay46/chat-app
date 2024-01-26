@@ -10,7 +10,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class UserProvider extends BaseProvider with ChangeNotifier {
   UserProvider() {
-    init();
+    getCurrentUser();
   }
 
   @override
@@ -19,8 +19,9 @@ class UserProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  UserModel _currentUser = UserModel();
-  UserModel get currentUser => _currentUser;
+  Box? box;
+  User? _currentUser;
+  User? get currentUser => _currentUser;
 
   Future<void> signIn() async {
     try {
@@ -37,8 +38,8 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> userIsLogin() async {
-    var box = await Hive.openBox('isLogged');
-    await box.put('isLogged', true);
+    box = await Hive.openBox('isLogged');
+    await box!.put('isLogged', true);
   }
 
   UserModel _userToUserModel(User user) {
@@ -51,22 +52,21 @@ class UserProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> saveCurrentUser(User user) async {
     var userModel = _userToUserModel(user);
-    var box = await Hive.openBox<UserModel>('userBox');
-    if (!(await box.isEmpty)) {
-      await box.clear();
+
+    if (!(await box!.isEmpty)) {
+      await box!.clear();
     }
-    await box.put('currentUser', userModel);
-    await getCurrentUser();
+    await box!.put('currentUser', userModel);
   }
 
-  Future<void> getCurrentUser() async {
-    var box = await Hive.openBox<UserModel>('userBox');
-    _currentUser = box.get('currentUser') as UserModel;
+  void getCurrentUser() {
+    _currentUser = FirebaseAuth.instance.currentUser;
     notifyListeners();
   }
 
   @override
   void init() async {
-    await getCurrentUser();
+    box = await Hive.openBox<UserModel>('userBox');
+    box?.close();
   }
 }

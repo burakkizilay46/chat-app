@@ -4,14 +4,9 @@ import 'package:chat_app/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return BaseView(
@@ -23,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
       onPageBuilder: (UserProvider provider) => Scaffold(
         appBar: AppBar(
           title: Text(
-            context.read<UserProvider>().currentUser.uid.toString(),
+            context.read<UserProvider>().currentUser!.displayName!.toLowerCase(),
             style: context.normalTextStyle.copyWith(fontSize: 14),
           ),
           actions: [
@@ -31,7 +26,7 @@ class _HomeViewState extends State<HomeView> {
               radius: 24,
               child: ClipOval(
                 child: Image.network(
-                  context.read<UserProvider>().currentUser.photoUrl.toString(),
+                  context.read<UserProvider>().currentUser!.photoURL.toString(),
                   fit: BoxFit.cover, // You can adjust the BoxFit property as needed.
                 ),
               ),

@@ -24,9 +24,9 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
   late T provider;
   @override
   void initState() {
+    super.initState();
     provider = widget.provider;
     widget.onProviderReady(provider);
-    super.initState();
   }
 
   @override
