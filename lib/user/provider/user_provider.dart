@@ -26,7 +26,6 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> signIn() async {
     try {
       await signInWithGoogle().then((value) async {
-        await saveCurrentUser(value.user!);
         userIsLogin();
         navigation.navigateToPage(path: NavigationConstants.HOME);
         notifyListeners();
@@ -40,23 +39,6 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> userIsLogin() async {
     box = await Hive.openBox('isLogged');
     await box!.put('isLogged', true);
-  }
-
-  UserModel _userToUserModel(User user) {
-    return UserModel()
-      ..uid = user.uid
-      ..email = user.email ?? ''
-      ..photoUrl = user.photoURL ?? ''
-      ..displayName = user.displayName ?? '';
-  }
-
-  Future<void> saveCurrentUser(User user) async {
-    var userModel = _userToUserModel(user);
-
-    if (!(await box!.isEmpty)) {
-      await box!.clear();
-    }
-    await box!.put('currentUser', userModel);
   }
 
   void getCurrentUser() {
