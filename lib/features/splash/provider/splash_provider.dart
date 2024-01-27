@@ -1,6 +1,6 @@
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
-import 'package:chat_app/user/model/user_model.dart';
+import 'package:chat_app/providers/user/model/user_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

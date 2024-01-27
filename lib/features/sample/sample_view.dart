@@ -45,11 +45,11 @@ class _SampleViewState extends State<SampleView> {
               children: [
                 FloatingActionButton(
                   onPressed: _incrementCounter,
-                  child: Icon(Icons.add),
+                  child: const Icon(Icons.add),
                 ),
                 FloatingActionButton(
                   onPressed: _saveCount,
-                  child: Icon(Icons.save),
+                  child: const Icon(Icons.save),
                 ),
               ],
             ),
@@ -61,9 +61,9 @@ class _SampleViewState extends State<SampleView> {
           // Yükleme sırasında gösterilecek widget
           return Scaffold(
             appBar: AppBar(
-              title: Text('Yükleniyor...'),
+              title: const Text('Yükleniyor...'),
             ),
-            body: Center(
+            body: const Center(
               child: CircularProgressIndicator(),
             ),
           );

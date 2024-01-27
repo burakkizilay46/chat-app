@@ -3,7 +3,7 @@ import 'package:chat_app/core/constants/image/image_constants.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 
 import 'package:chat_app/features/signin/provider/signin_provider.dart';
-import 'package:chat_app/user/provider/user_provider.dart';
+import 'package:chat_app/providers/user/provider/user_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

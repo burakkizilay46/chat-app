@@ -1,5 +1,6 @@
 import 'package:chat_app/core/constants/cache/cache_constants.dart';
-import 'package:chat_app/user/model/user_model.dart';
+import 'package:chat_app/providers/user/model/user_model.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 
 class BaseCacheManager<T> {

@@ -12,8 +12,8 @@ class ChatBubble extends StatelessWidget {
       mainAxisAlignment: isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-          margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.6),
           decoration: BoxDecoration(
             color: isSender ? Colors.blue : Colors.grey[300],
@@ -29,7 +29,7 @@ class ChatBubble extends StatelessWidget {
   }
 
   BorderRadius _senderBubbleBorderRadius() {
-    return BorderRadius.only(
+    return const BorderRadius.only(
       topLeft: Radius.circular(12),
       topRight: Radius.circular(12),
       bottomLeft: Radius.circular(12),
@@ -37,7 +37,7 @@ class ChatBubble extends StatelessWidget {
   }
 
   BorderRadius _receiverBubbleBorderRadius() {
-    return BorderRadius.only(
+    return const BorderRadius.only(
       topLeft: Radius.circular(12),
       topRight: Radius.circular(12),
       bottomRight: Radius.circular(12),

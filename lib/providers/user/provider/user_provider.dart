@@ -1,10 +1,9 @@
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/core/init/network/auth/google_signin.dart';
-import 'package:chat_app/user/model/user_model.dart';
+import 'package:chat_app/providers/user/model/user_model.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -27,6 +26,7 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> signIn() async {
     try {
       await signInWithGoogle().then((value) async {
+        print(value.user!.uid);
         userIsLogin(true);
         getCurrentUser();
         navigation.navigateToPage(path: NavigationConstants.HOME);
