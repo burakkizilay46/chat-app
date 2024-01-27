@@ -3,6 +3,7 @@ import 'package:chat_app/core/init/navigation/navigation_service.dart';
 import 'package:chat_app/features/signin/provider/signin_provider.dart';
 import 'package:chat_app/features/splash/provider/splash_provider.dart';
 import 'package:chat_app/features/splash/view/splash_view.dart';
+import 'package:chat_app/providers/chat/chat_provider.dart';
 import 'package:chat_app/providers/friends/friends_provider.dart';
 
 import 'package:chat_app/providers/user/provider/user_provider.dart';
@@ -18,6 +19,7 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<SplashProvider>(create: (context) => SplashProvider()),
+    ChangeNotifierProvider<ChatProvider>(create: (context) => ChatProvider()),
     ChangeNotifierProvider<FriendsProvider>(create: (context) => FriendsProvider()),
     ChangeNotifierProvider<SignInProvider>(create: (context) => SignInProvider()),
     ChangeNotifierProvider<UserProvider>(create: (context) => UserProvider()),

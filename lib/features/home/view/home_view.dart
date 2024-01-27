@@ -44,9 +44,21 @@ class HomeView extends StatelessWidget {
             child: ListView.builder(
               itemCount: context.watch<FriendsProvider>().firends.length,
               itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text('${context.watch<FriendsProvider>().firends[index].userId}'),
+                return GestureDetector(
+                  onTap: () => context.read<FriendsProvider>().navigateToChatView(),
+                  child: Card(
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 24,
+                        child: ClipOval(
+                          child: Image.network(
+                            '${context.watch<FriendsProvider>().firends[index].photoURL}',
+                            fit: BoxFit.cover, // You can adjust the BoxFit property as needed.
+                          ),
+                        ),
+                      ),
+                      title: Text('${context.watch<FriendsProvider>().firends[index].userId}'),
+                    ),
                   ),
                 );
               },

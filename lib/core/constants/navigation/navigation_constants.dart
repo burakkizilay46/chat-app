@@ -6,4 +6,5 @@ class NavigationConstants {
   static const SPLASH = "/splash";
   static const HOME = '/home';
   static const SIGNIN = '/signin';
+  static const CHATVIEW = '/chatview';
 }

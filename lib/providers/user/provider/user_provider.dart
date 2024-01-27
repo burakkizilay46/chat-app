@@ -29,7 +29,7 @@ class UserProvider extends BaseProvider with ChangeNotifier {
         print(value.user!.uid);
         userIsLogin(true);
         getCurrentUser();
-        navigation.navigateToPage(path: NavigationConstants.HOME);
+        navigation.navigateToPageClear(path: NavigationConstants.HOME);
         notifyListeners();
       });
     } catch (error) {
