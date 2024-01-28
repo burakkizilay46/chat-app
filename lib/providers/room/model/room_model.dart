@@ -1,73 +1,43 @@
-// To parse this JSON data, do
-//
-//     final roomsModel = roomsModelFromJson(jsonString);
-
-import 'dart:convert';
-
-RoomsModel roomsModelFromJson(String str) => RoomsModel.fromJson(json.decode(str));
-
-String roomsModelToJson(RoomsModel data) => json.encode(data.toJson());
-
 class RoomsModel {
   List<String> users;
-  List<Message> messages;
+  Message message;
 
-  RoomsModel({
-    required this.users,
-    required this.messages,
-  });
+  RoomsModel({required this.users, required this.message});
 
   factory RoomsModel.fromJson(Map<String, dynamic> json) => RoomsModel(
-        users: List<String>.from(json["users"].map((x) => x)),
-        messages: List<Message>.from(json["messages"].map((x) => Message.fromJson(x))),
+        users: List<String>.from(json['users']),
+        message: Message.fromJson(json['messages']),
       );
 
   Map<String, dynamic> toJson() => {
-        "users": List<dynamic>.from(users.map((x) => x)),
-        "messages": List<Message>.from(messages.map((x) => x.toJson())),
+        'users': users,
+        'messages': message.toJson(),
       };
+
+  @override
+  String toString() {
+    return 'Data(users: $users, message: $message)';
+  }
 }
 
 class Message {
   String content;
-  SendTime sendTime;
   String senderId;
 
-  Message({
-    required this.content,
-    required this.sendTime,
-    required this.senderId,
-  });
+  Message({required this.content, required this.senderId});
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
-        content: json["content"],
-        sendTime: SendTime.fromJson(json["sendTime"]),
-        senderId: json["senderID"],
+        content: json['content'],
+        senderId: json['senderId'],
       );
 
   Map<String, dynamic> toJson() => {
-        "content": content,
-        "sendTime": sendTime.toJson(),
-        "senderID": senderId,
+        'content': content,
+        'senderId': senderId,
       };
-}
 
-class SendTime {
-  int seconds;
-  int nanoseconds;
-
-  SendTime({
-    required this.seconds,
-    required this.nanoseconds,
-  });
-
-  factory SendTime.fromJson(Map<String, dynamic> json) => SendTime(
-        seconds: json["seconds"],
-        nanoseconds: json["nanoseconds"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "seconds": seconds,
-        "nanoseconds": nanoseconds,
-      };
+  @override
+  String toString() {
+    return 'Message(content: $content, senderId: $senderId)';
+  }
 }

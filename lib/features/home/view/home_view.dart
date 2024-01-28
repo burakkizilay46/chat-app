@@ -1,7 +1,5 @@
 import 'package:chat_app/core/base/view/base_view.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
-import 'package:chat_app/core/init/firebase/firebase_helper.dart';
-
 import 'package:chat_app/providers/friends/friends_provider.dart';
 import 'package:chat_app/providers/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +18,6 @@ class HomeView extends StatelessWidget {
         context.read<FriendsProvider>().init();
       },
       onPageBuilder: (UserProvider provider) => Scaffold(
-          floatingActionButton: FloatingActionButton(onPressed: () async {
-            FirebaseHelper().getRooms();
-          }),
           appBar: AppBar(
             title: Text(
               context.read<UserProvider>().currentUser!.uid.toLowerCase(),
@@ -53,7 +48,7 @@ class HomeView extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       title: Text(
-                        '${context.watch<FriendsProvider>().rooms[index]}',
+                        context.watch<FriendsProvider>().rooms[index].message.senderId,
                         style: context.normalTextStyle.copyWith(fontSize: 14),
                       ),
                     ),

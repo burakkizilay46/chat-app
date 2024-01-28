@@ -32,8 +32,7 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
   }
 
   Future<void> getAllRooms() async {
-    /* _rooms = await FirebaseHelper().getRooms(); */
-    print(_rooms);
+    _rooms = await FirebaseHelper().getRooms();
     notifyListeners();
   }
 }
