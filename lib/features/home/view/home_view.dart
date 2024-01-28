@@ -1,6 +1,7 @@
 import 'package:chat_app/core/base/view/base_view.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 import 'package:chat_app/core/init/firebase/firebase_helper.dart';
+
 import 'package:chat_app/providers/friends/friends_provider.dart';
 import 'package:chat_app/providers/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,9 @@ class HomeView extends StatelessWidget {
         context.read<FriendsProvider>().init();
       },
       onPageBuilder: (UserProvider provider) => Scaffold(
+          floatingActionButton: FloatingActionButton(onPressed: () async {
+            FirebaseHelper().getRooms();
+          }),
           appBar: AppBar(
             title: Text(
               context.read<UserProvider>().currentUser!.uid.toLowerCase(),
@@ -42,22 +46,16 @@ class HomeView extends StatelessWidget {
               child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListView.builder(
-              itemCount: context.watch<FriendsProvider>().firends.length,
+              itemCount: context.watch<FriendsProvider>().rooms.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () => context.read<FriendsProvider>().navigateToChatView(),
                   child: Card(
                     child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 24,
-                        child: ClipOval(
-                          child: Image.network(
-                            '${context.watch<FriendsProvider>().firends[index].photoURL}',
-                            fit: BoxFit.cover, // You can adjust the BoxFit property as needed.
-                          ),
-                        ),
+                      title: Text(
+                        '${context.watch<FriendsProvider>().rooms[index]}',
+                        style: context.normalTextStyle.copyWith(fontSize: 14),
                       ),
-                      title: Text('${context.watch<FriendsProvider>().firends[index].userId}'),
                     ),
                   ),
                 );
