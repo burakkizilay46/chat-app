@@ -15,14 +15,14 @@ class FirebaseHelper {
     return allUsers;
   }
 
-  Future<List<RoomsModel>> getRooms() async {
+  Future<List<RoomsModel>> getRooms(String userId) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference rooms = firestore.collection('/rooms');
 
-    QuerySnapshot querySnapshot = await rooms.get();
-    final allRooms = querySnapshot.docs.map((doc) => RoomsModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
+    QuerySnapshot snapshot = await rooms.where('users', arrayContains: userId).get();
+
+    /* QuerySnapshot querySnapshot = await rooms.get(); */
+    final allRooms = snapshot.docs.map((doc) => RoomsModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
     return allRooms;
   }
 }
-
-/*  */

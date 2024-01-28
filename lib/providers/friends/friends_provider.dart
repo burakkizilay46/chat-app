@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 
 class FriendsProvider extends BaseProvider with ChangeNotifier {
   @override
-  void init() async {
-    await getAllRooms();
-  }
+  void init() async {}
 
   @override
   void setContext(BuildContext context) {
@@ -31,8 +29,8 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getAllRooms() async {
-    _rooms = await FirebaseHelper().getRooms();
+  Future<void> getAllRooms(String userId) async {
+    _rooms = await FirebaseHelper().getRooms(userId);
     notifyListeners();
   }
 }

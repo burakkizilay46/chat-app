@@ -15,7 +15,7 @@ class HomeView extends StatelessWidget {
       onProviderReady: (UserProvider provider) {
         provider.setContext(context);
         provider.init();
-        context.read<FriendsProvider>().init();
+        context.read<FriendsProvider>().getAllRooms(context.read<UserProvider>().currentUser!.uid);
       },
       onPageBuilder: (UserProvider provider) => Scaffold(
           appBar: AppBar(
@@ -40,22 +40,27 @@ class HomeView extends StatelessWidget {
           body: Center(
               child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: context.watch<FriendsProvider>().rooms.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => context.read<FriendsProvider>().navigateToChatView(),
-                  child: Card(
-                    child: ListTile(
-                      title: Text(
-                        context.watch<FriendsProvider>().rooms[index].messages[0].content,
-                        style: context.normalTextStyle.copyWith(fontSize: 14),
-                      ),
-                    ),
+            child: context.watch<FriendsProvider>().rooms.isEmpty
+                ? Center(
+                    child: Text('Mesaj yok'),
+                  )
+                : ListView.builder(
+                    itemCount: context.watch<FriendsProvider>().rooms.length,
+                    itemBuilder: (context, index) {
+                      var item = context.watch<FriendsProvider>().rooms;
+                      return GestureDetector(
+                        onTap: () => context.read<FriendsProvider>().navigateToChatView(),
+                        child: Card(
+                          child: ListTile(
+                            title: Text(
+                              item[index].messages[0].content,
+                              style: context.normalTextStyle.copyWith(fontSize: 14),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ))),
     );
   }
