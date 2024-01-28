@@ -1,9 +1,11 @@
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
+import 'package:chat_app/core/init/navigation/navigation_exception.dart';
 import 'package:chat_app/features/chat/view/chat_view.dart';
 import 'package:chat_app/features/home/view/home_view.dart';
 import 'package:chat_app/features/sample/sample_view.dart';
 import 'package:chat_app/features/signin/view/signin_view.dart';
 import 'package:chat_app/features/splash/view/splash_view.dart';
+import 'package:chat_app/providers/room/model/room_model.dart';
 import 'package:flutter/material.dart';
 
 class NavigationRoute {
@@ -25,7 +27,10 @@ class NavigationRoute {
       case NavigationConstants.SIGNIN:
         return normalNavigate(const SignInView());
       case NavigationConstants.CHATVIEW:
-        return normalNavigate(ChatView());
+        if (args.arguments is RoomsModel) {
+          return normalNavigate(ChatView(chats: args.arguments! as RoomsModel));
+        }
+        throw NavigateException<String>(args.arguments);
       default:
         return normalNavigate(const HomeView());
     }

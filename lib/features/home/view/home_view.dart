@@ -48,7 +48,7 @@ class HomeView extends StatelessWidget {
                   child: Card(
                     child: ListTile(
                       title: Text(
-                        context.watch<FriendsProvider>().rooms[index].message.senderId,
+                        context.watch<FriendsProvider>().rooms[index].messages[0].content,
                         style: context.normalTextStyle.copyWith(fontSize: 14),
                       ),
                     ),

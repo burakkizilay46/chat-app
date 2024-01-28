@@ -1,22 +1,22 @@
 class RoomsModel {
   List<String> users;
-  Message message;
+  List<Message> messages;
 
-  RoomsModel({required this.users, required this.message});
+  RoomsModel({required this.users, required this.messages});
 
   factory RoomsModel.fromJson(Map<String, dynamic> json) => RoomsModel(
-        users: List<String>.from(json['users']),
-        message: Message.fromJson(json['messages']),
+        users: List<String>.from(json['users'] as List),
+        messages: (json['messages'] as List).map((e) => Message.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
   Map<String, dynamic> toJson() => {
         'users': users,
-        'messages': message.toJson(),
+        'messages': messages.map((e) => e.toJson()).toList(),
       };
 
   @override
   String toString() {
-    return 'Data(users: $users, message: $message)';
+    return 'Data(users: $users, messages: $messages)';
   }
 }
 
