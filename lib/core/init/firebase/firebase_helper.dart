@@ -20,9 +20,37 @@ class FirebaseHelper {
     CollectionReference rooms = firestore.collection('/rooms');
 
     QuerySnapshot snapshot = await rooms.where('users', arrayContains: userId).get();
+    final id = snapshot.docs.map((e) => e.id);
+    print(id.runtimeType);
 
     /* QuerySnapshot querySnapshot = await rooms.get(); */
-    final allRooms = snapshot.docs.map((doc) => RoomsModel.fromJson(doc.data() as Map<String, dynamic>)).toList();
+
+    final allRooms =
+        snapshot.docs.map((doc) => RoomsModel.fromJson(doc.id.toString(), doc.data() as Map<String, dynamic>)).toList();
     return allRooms;
+  }
+
+  Future<void> sendMessage(String roomId, String content, String senderId) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Oluşturmak istediğiniz Message modeli
+    Map<String, dynamic> messageData = {'content': content, 'senderId': senderId};
+
+    // Belirli bir room dokümanını bulma ve messages dizisine yeni mesaj ekleyin
+    DocumentReference roomRef = firestore.collection('rooms').doc(roomId);
+
+    return firestore.runTransaction((transaction) async {
+      DocumentSnapshot roomSnapshot = await transaction.get(roomRef);
+
+      if (!roomSnapshot.exists) {
+        throw Exception("Room not found!");
+      }
+
+      Map<String, dynamic> roomData = roomSnapshot.data() as Map<String, dynamic>;
+      List<dynamic> messages = roomData['messages'] as List<dynamic>? ?? [];
+      messages.add(messageData);
+
+      transaction.update(roomRef, {'messages': messages});
+    });
   }
 }

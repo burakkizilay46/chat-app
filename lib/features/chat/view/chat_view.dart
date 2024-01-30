@@ -40,7 +40,7 @@ class _ChatViewState extends State<ChatView> {
                 icon: Icon(Icons.refresh))
           ],
           title: Text(
-            otherSenderId,
+            widget.chats.id,
             style: context.normalTextStyle.copyWith(fontSize: 12),
           ),
         ),

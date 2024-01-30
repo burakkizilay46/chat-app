@@ -1,10 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class RoomsModel {
+  final String id;
   List<String> users;
   List<Message> messages;
 
-  RoomsModel({required this.users, required this.messages});
+  RoomsModel({
+    required this.id,
+    required this.users,
+    required this.messages,
+  });
 
-  factory RoomsModel.fromJson(Map<String, dynamic> json) => RoomsModel(
+  factory RoomsModel.fromJson(String id, Map<String, dynamic> json) => RoomsModel(
+        id: id,
         users: List<String>.from(json['users'] as List),
         messages: (json['messages'] as List).map((e) => Message.fromJson(e as Map<String, dynamic>)).toList(),
       );

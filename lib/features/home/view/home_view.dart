@@ -51,6 +51,7 @@ class HomeView extends StatelessWidget {
                       return GestureDetector(
                         onTap: () => context.read<FriendsProvider>().navigateToChatView(),
                         child: Card(
+                          key: ValueKey(context.watch<FriendsProvider>().rooms[index].id),
                           child: ListTile(
                             title: Text(
                               item[index].messages[0].content,
