@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/core/components/chat_bubble/chat_bubble_view.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
+import 'package:chat_app/providers/chat/chat_provider.dart';
 import 'package:chat_app/providers/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ class ChatView extends StatefulWidget {
 class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController _controller = TextEditingController();
     var currentUserId = context.read<UserProvider>().currentUser!.uid.toString();
     String otherSenderId = '';
     for (var message in widget.chats.messages) {
@@ -30,19 +32,15 @@ class _ChatViewState extends State<ChatView> {
         break;
       }
     }
+
     return Scaffold(
         appBar: AppBar(
           actions: [
             IconButton(
-                onPressed: () {
-                  setState(() {});
-                },
+                onPressed: () => context.read<ChatProvider>().listenToMessages(widget.chats.id),
                 icon: Icon(Icons.refresh))
           ],
-          title: Text(
-            widget.chats.id,
-            style: context.normalTextStyle.copyWith(fontSize: 12),
-          ),
+          title: Text(widget.chats.id, style: context.normalTextStyle.copyWith(fontSize: 12)),
         ),
         body: Padding(
           padding: EdgeInsets.all(8.0),
@@ -50,14 +48,21 @@ class _ChatViewState extends State<ChatView> {
             children: [
               Flexible(
                 flex: 88,
-                child: ListView.builder(
-                    itemCount: widget.chats.messages.length,
-                    itemBuilder: (context, index) {
-                      return ChatBubble(
-                          message: widget.chats.messages[index].content,
-                          isSender: context.read<UserProvider>().currentUser!.uid.toString() ==
-                              widget.chats.messages[index].senderId);
-                    }),
+                child: Consumer<ChatProvider>(
+                  builder: (context, chatProvider, child) {
+                    return ListView.builder(
+                        itemCount: chatProvider.messages.length,
+                        itemBuilder: (context, index) {
+                          var message = chatProvider.messages[index];
+                          var isSender = context.read<UserProvider>().currentUser!.uid.toString() == message.senderId;
+
+                          return ChatBubble(
+                            message: message.content,
+                            isSender: isSender,
+                          );
+                        });
+                  },
+                ),
               ),
               Flexible(
                 flex: 10,
@@ -67,13 +72,21 @@ class _ChatViewState extends State<ChatView> {
                       child: SizedBox(
                         height: 48,
                         child: TextField(
+                          controller: _controller,
                           decoration: InputDecoration(
                               label: Text('Mesaj'),
                               border: OutlineInputBorder(borderRadius: BorderRadius.circular(100))),
                         ),
                       ),
                     ),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.send))
+                    IconButton(
+                        onPressed: () {
+                          context.read<ChatProvider>().sendMessage(
+                              widget.chats.id, _controller.text.trim(), context.read<UserProvider>().currentUser!.uid);
+                          _controller.clear();
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.send))
                   ],
                 ),
               )

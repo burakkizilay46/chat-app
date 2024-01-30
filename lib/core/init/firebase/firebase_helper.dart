@@ -53,4 +53,19 @@ class FirebaseHelper {
       transaction.update(roomRef, {'messages': messages});
     });
   }
+
+  Stream<List<Message>> listenChat(String roomId) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    DocumentReference roomRef = firestore.collection('rooms').doc(roomId);
+
+    return roomRef.snapshots().map((documentSnapshot) {
+      if (documentSnapshot.exists) {
+        Map<String, dynamic> data = documentSnapshot.data()! as Map<String, dynamic>;
+        List<dynamic> messagesData = data['messages'] as List<dynamic> ?? [];
+        return messagesData.map((msgData) => Message.fromJson(msgData as Map<String, dynamic>)).toList();
+      } else {
+        return [];
+      }
+    });
+  }
 }
