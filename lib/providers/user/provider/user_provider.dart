@@ -1,6 +1,7 @@
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/core/init/network/auth/google_signin.dart';
+import 'package:chat_app/providers/user/firebase/user_firebase.dart';
 import 'package:chat_app/providers/user/model/user_model.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,16 +27,27 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> signIn() async {
     try {
       await signInWithGoogle().then((value) async {
-        print(value.user!.uid);
-        userIsLogin(true);
-        getCurrentUser();
-        navigation.navigateToPageClear(path: NavigationConstants.HOME);
-        notifyListeners();
+        if (value.additionalUserInfo!.isNewUser) {
+          registerUser(value.user!);
+        } else {
+          signInApp();
+        }
       });
     } catch (error) {
       print(error);
       Exception(error);
     }
+  }
+
+  void signInApp() {
+    userIsLogin(true);
+    getCurrentUser();
+    navigation.navigateToPageClear(path: NavigationConstants.HOME);
+    notifyListeners();
+  }
+
+  Future<void> registerUser(User newUser) async {
+    await UserDatabase().addUser(newUser).then((value) => signInApp());
   }
 
   Future<void> signOut() async {
