@@ -20,8 +20,8 @@ class FirebaseHelper {
     CollectionReference rooms = firestore.collection('/rooms');
 
     QuerySnapshot snapshot = await rooms.where('users', arrayContains: userId).get();
+    // ignore: unused_local_variable
     final id = snapshot.docs.map((e) => e.id);
-    print(id.runtimeType);
 
     /* QuerySnapshot querySnapshot = await rooms.get(); */
 

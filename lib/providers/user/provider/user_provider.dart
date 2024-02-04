@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/core/init/network/auth/google_signin.dart';

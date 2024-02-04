@@ -18,14 +18,14 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScrollController _scrollController = ScrollController();
-    TextEditingController _controller = TextEditingController();
+    ScrollController scrollController = ScrollController();
+    TextEditingController controller = TextEditingController();
 
-    void _scrollToEnd() {
-      final position = _scrollController.position.maxScrollExtent;
-      _scrollController.animateTo(
+    void scrollToEnd() {
+      final position = scrollController.position.maxScrollExtent;
+      scrollController.animateTo(
         position,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
     }
@@ -36,7 +36,7 @@ class ChatView extends StatelessWidget {
         provider.listenToMessages(chats.id);
       },
       onDispose: (model) {
-        _scrollController.dispose();
+        scrollController.dispose();
       },
       onPageBuilder: (ChatProvider provider) {
         return Scaffold(
@@ -44,13 +44,13 @@ class ChatView extends StatelessWidget {
               title: Text(chats.id, style: context.normalTextStyle.copyWith(fontSize: 12)),
               actions: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.arrow_downward),
-                  onPressed: _scrollToEnd,
+                  icon: const Icon(Icons.arrow_downward),
+                  onPressed: scrollToEnd,
                 ),
               ],
             ),
             body: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Flexible(
@@ -58,10 +58,10 @@ class ChatView extends StatelessWidget {
                     child: Consumer<ChatProvider>(
                       builder: (context, chatProvider, child) {
                         if (chatProvider.isLoading) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
                         return ListView.builder(
-                          controller: _scrollController,
+                          controller: scrollController,
                           itemCount: chatProvider.messages.length,
                           itemBuilder: (context, index) {
                             var message = chatProvider.messages[index];
@@ -83,9 +83,9 @@ class ChatView extends StatelessWidget {
                           child: SizedBox(
                             height: 48,
                             child: TextField(
-                              controller: _controller,
+                              controller: controller,
                               decoration: InputDecoration(
-                                  label: Text('Mesaj'),
+                                  label: const Text('Mesaj'),
                                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(100))),
                             ),
                           ),
@@ -95,10 +95,10 @@ class ChatView extends StatelessWidget {
                               context
                                   .read<ChatProvider>()
                                   .sendMessage(
-                                      chats.id, _controller.text.trim(), context.read<UserProvider>().currentUser!.uid)
-                                  .whenComplete(() => _scrollToEnd()); // Bu şekilde düzeltilmelidir
+                                      chats.id, controller.text.trim(), context.read<UserProvider>().currentUser!.uid)
+                                  .whenComplete(() => scrollToEnd()); // Bu şekilde düzeltilmelidir
 
-                              _controller.clear();
+                              controller.clear();
                             },
                             icon: const Icon(Icons.send))
                       ],

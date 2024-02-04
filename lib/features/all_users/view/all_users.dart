@@ -37,7 +37,7 @@ class AllUsers extends StatelessWidget {
                                         title: Text(item.userId!),
                                       ),
                                     ),
-                                    Divider(),
+                                    const Divider(),
                                   ],
                                 );
                               },

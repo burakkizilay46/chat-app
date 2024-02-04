@@ -11,6 +11,7 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
 
   @override
   void setContext(BuildContext context) {
+    // ignore: todo
     // TODO: implement setContext
   }
 

@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
       onPageBuilder: (UserProvider provider) => Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () => context.read<UserProvider>().navigateToAllUsersView(),
-            child: Icon(Icons.person),
+            child: const Icon(Icons.person),
           ),
           appBar: AppBar(
             title: Text(
@@ -31,8 +31,8 @@ class HomeView extends StatelessWidget {
               CircleAvatar(
                 backgroundImage: NetworkImage(context.read<UserProvider>().currentUser!.photoURL.toString()),
               ),
-              IconButton(onPressed: () => context.read<UserProvider>().signOut(), icon: Icon(Icons.logout)),
-              SizedBox(width: 8)
+              IconButton(onPressed: () => context.read<UserProvider>().signOut(), icon: const Icon(Icons.logout)),
+              const SizedBox(width: 8)
             ],
           ),
           body: Center(

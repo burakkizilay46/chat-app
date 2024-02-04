@@ -11,6 +11,7 @@ class SignInProvider extends BaseProvider with ChangeNotifier {
 
   @override
   void init() {
+    // ignore: todo
     // TODO: implement init
   }
 }

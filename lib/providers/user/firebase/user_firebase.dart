@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, duplicate_ignore
+
 import 'package:chat_app/providers/user/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +13,7 @@ class UserDatabase {
           'userId': userData.uid,
           'photoURL': userData.photoURL
         }) // userData, eklenecek kullanıcı verilerini içeren bir Map olmalı.
+        // ignore: avoid_print
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
   }
