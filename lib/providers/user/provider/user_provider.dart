@@ -2,7 +2,6 @@ import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
 import 'package:chat_app/core/init/network/auth/google_signin.dart';
 import 'package:chat_app/providers/user/firebase/user_firebase.dart';
-import 'package:chat_app/providers/user/model/user_model.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -23,8 +22,10 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Box? box;
   User? _currentUser;
   User? get currentUser => _currentUser;
-  List<UserModel> _allUsers = [];
-  List<UserModel> get allUsers => _allUsers;
+  List _allUsers = [];
+  List get allUsers => _allUsers;
+  bool _allUsersIsLoaded = false;
+  bool get allUsersIsLoaded => _allUsersIsLoaded;
 
   Future<void> signIn() async {
     try {
@@ -73,8 +74,14 @@ class UserProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void getAllUsers() async {
-    _allUsers = await UserDatabase().getAllUsers();
+  Future<void> getAllUsers() async {
+    try {
+      _allUsers = await UserDatabase().getAllUsers();
+      _allUsersIsLoaded = true;
+    } catch (e) {
+      print("Kullanıcılar yüklenirken hata oluştu: $e");
+      _allUsersIsLoaded = false;
+    }
     notifyListeners();
   }
 

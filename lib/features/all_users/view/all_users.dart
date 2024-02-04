@@ -12,23 +12,32 @@ class AllUsers extends StatelessWidget {
     return BaseView(
         provider: UserProvider(),
         onProviderReady: (UserProvider provider) {
-          context.read<UserProvider>().getAllUsers();
+          provider.getAllUsers();
         },
         onPageBuilder: (UserProvider provider) {
           return Scaffold(
               appBar: AppBar(),
-              body: Container(
-                height: context.height,
-                child: ListView.builder(
-                  itemCount: context.watch<UserProvider>().allUsers.length,
-                  itemBuilder: (context, index) {
-                    var item = context.watch<UserProvider>().allUsers[index];
-                    return ListTile(
-                      leading: Image.network(item.photoURL!),
-                      title: Text(item.userId!),
-                    );
-                  },
-                ),
+              body: Center(
+                child: context.watch<UserProvider>().allUsers.isEmpty
+                    ? const Center(child: CircularProgressIndicator())
+                    : Container(
+                        height: context.height,
+                        child: ListView.builder(
+                          itemCount: context.watch<UserProvider>().allUsers.length,
+                          itemBuilder: (context, index) {
+                            var item = context.watch<UserProvider>().allUsers[index];
+                            return Column(
+                              children: [
+                                ListTile(
+                                  leading: Image.network(item.photoURL!),
+                                  title: Text(item.userId!),
+                                ),
+                                Divider(),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
               ));
         });
   }
