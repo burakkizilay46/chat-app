@@ -24,8 +24,6 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   User? get currentUser => _currentUser;
   List _allUsers = [];
   List get allUsers => _allUsers;
-  bool _allUsersIsLoaded = false;
-  bool get allUsersIsLoaded => _allUsersIsLoaded;
 
   Future<void> signIn() async {
     try {
@@ -77,12 +75,10 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Future<void> getAllUsers() async {
     try {
       _allUsers = await UserDatabase().getAllUsers();
-      _allUsersIsLoaded = true;
+      notifyListeners();
     } catch (e) {
       print("Kullanıcılar yüklenirken hata oluştu: $e");
-      _allUsersIsLoaded = false;
     }
-    notifyListeners();
   }
 
   @override

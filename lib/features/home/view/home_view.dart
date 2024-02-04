@@ -29,13 +29,7 @@ class HomeView extends StatelessWidget {
             ),
             actions: [
               CircleAvatar(
-                radius: 24,
-                child: ClipOval(
-                  child: Image.network(
-                    context.read<UserProvider>().currentUser!.photoURL.toString(),
-                    fit: BoxFit.cover, // You can adjust the BoxFit property as needed.
-                  ),
-                ),
+                backgroundImage: NetworkImage(context.read<UserProvider>().currentUser!.photoURL.toString()),
               ),
               IconButton(onPressed: () => context.read<UserProvider>().signOut(), icon: Icon(Icons.logout)),
               SizedBox(width: 8)
@@ -45,9 +39,7 @@ class HomeView extends StatelessWidget {
               child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: context.watch<FriendsProvider>().rooms.isEmpty
-                ? Center(
-                    child: Text('Mesaj yok'),
-                  )
+                ? const Center(child: Text('Mesaj yok'))
                 : ListView.builder(
                     itemCount: context.watch<FriendsProvider>().rooms.length,
                     itemBuilder: (context, index) {

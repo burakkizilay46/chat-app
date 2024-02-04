@@ -17,27 +17,34 @@ class AllUsers extends StatelessWidget {
         onPageBuilder: (UserProvider provider) {
           return Scaffold(
               appBar: AppBar(),
-              body: Center(
-                child: context.watch<UserProvider>().allUsers.isEmpty
-                    ? const Center(child: CircularProgressIndicator())
-                    : Container(
-                        height: context.height,
-                        child: ListView.builder(
-                          itemCount: context.watch<UserProvider>().allUsers.length,
-                          itemBuilder: (context, index) {
-                            var item = context.watch<UserProvider>().allUsers[index];
-                            return Column(
-                              children: [
-                                ListTile(
-                                  leading: Image.network(item.photoURL!),
-                                  title: Text(item.userId!),
-                                ),
-                                Divider(),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
+              body: Consumer(
+                builder: (context, UserProvider conProvider, child) {
+                  return Center(
+                    child: conProvider.allUsers.isEmpty
+                        ? const Center(child: CircularProgressIndicator())
+                        : SizedBox(
+                            height: context.height,
+                            child: ListView.builder(
+                              itemCount: conProvider.allUsers.length,
+                              itemBuilder: (context, index) {
+                                var item = conProvider.allUsers[index];
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: ListTile(
+                                        leading: CircleAvatar(backgroundImage: NetworkImage(item.photoURL!)),
+                                        title: Text(item.userId!),
+                                      ),
+                                    ),
+                                    Divider(),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                  );
+                },
               ));
         });
   }
