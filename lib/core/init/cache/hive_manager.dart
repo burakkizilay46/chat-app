@@ -9,17 +9,6 @@ class BaseCacheManager<T> {
 
   BaseCacheManager(this.boxName);
 
-  Future<void> openBox() async {
-    registerAdaptor();
-    if (!(_box?.isOpen ?? false)) {
-      _box = await Hive.openBox<T>(boxName.name);
-    }
-  }
-
-  registerAdaptor() {
-    Hive.registerAdapter(UserModelAdapter());
-  }
-
   Future<void> updateItem(dynamic key, T val) async {
     await _box?.put(key, val);
   }

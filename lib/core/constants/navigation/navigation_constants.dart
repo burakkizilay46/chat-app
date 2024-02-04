@@ -7,4 +7,5 @@ class NavigationConstants {
   static const HOME = '/home';
   static const SIGNIN = '/signin';
   static const CHATVIEW = '/chatview';
+  static const ALLUSERS = '/all_users';
 }

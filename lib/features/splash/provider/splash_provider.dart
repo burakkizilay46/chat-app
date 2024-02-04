@@ -1,6 +1,6 @@
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
-import 'package:chat_app/providers/user/model/user_model.dart';
+
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -14,7 +14,6 @@ class SplashProvider extends BaseProvider with ChangeNotifier {
 
   @override
   void init() async {
-    Hive.registerAdapter(UserModelAdapter());
     await Future.delayed(const Duration(seconds: 2));
     navigateToPages();
   }

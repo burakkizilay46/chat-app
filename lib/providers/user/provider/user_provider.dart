@@ -23,6 +23,8 @@ class UserProvider extends BaseProvider with ChangeNotifier {
   Box? box;
   User? _currentUser;
   User? get currentUser => _currentUser;
+  List<UserModel> _allUsers = [];
+  List<UserModel> get allUsers => _allUsers;
 
   Future<void> signIn() async {
     try {
@@ -57,6 +59,10 @@ class UserProvider extends BaseProvider with ChangeNotifier {
     });
   }
 
+  void navigateToAllUsersView() {
+    navigation.navigateToPage(path: NavigationConstants.ALLUSERS);
+  }
+
   Future<void> userIsLogin(bool loginValue) async {
     box = await Hive.openBox('isLogged');
     await box!.put('isLogged', loginValue);
@@ -67,9 +73,11 @@ class UserProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  @override
-  void init() async {
-    box = await Hive.openBox<UserModel>('userBox');
-    box?.close();
+  void getAllUsers() async {
+    _allUsers = await UserDatabase().getAllUsers();
+    notifyListeners();
   }
+
+  @override
+  void init() async {}
 }

@@ -18,17 +18,16 @@ class ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+    ScrollController _scrollController = ScrollController();
     TextEditingController _controller = TextEditingController();
 
-    void _scrollToBottom() {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
+    void _scrollToEnd() {
+      final position = _scrollController.position.maxScrollExtent;
+      _scrollController.animateTo(
+        position,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     }
 
     return BaseView(
@@ -36,14 +35,19 @@ class ChatView extends StatelessWidget {
       onProviderReady: (ChatProvider provider) {
         provider.listenToMessages(chats.id);
       },
+      onDispose: (model) {
+        _scrollController.dispose();
+      },
       onPageBuilder: (ChatProvider provider) {
         return Scaffold(
             appBar: AppBar(
-              actions: [
-                IconButton(
-                    onPressed: () => context.read<ChatProvider>().listenToMessages(chats.id), icon: Icon(Icons.refresh))
-              ],
               title: Text(chats.id, style: context.normalTextStyle.copyWith(fontSize: 12)),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.arrow_downward),
+                  onPressed: _scrollToEnd,
+                ),
+              ],
             ),
             body: Padding(
               padding: EdgeInsets.all(8.0),
@@ -53,9 +57,8 @@ class ChatView extends StatelessWidget {
                     flex: 88,
                     child: Consumer<ChatProvider>(
                       builder: (context, chatProvider, child) {
-                        if (chatProvider.messages.isEmpty) {
-                          // Liste boşsa gösterilecek widget
-                          return Center(child: Text("Mesaj yok"));
+                        if (chatProvider.isLoading) {
+                          return Center(child: CircularProgressIndicator());
                         }
                         return ListView.builder(
                           controller: _scrollController,
@@ -93,10 +96,11 @@ class ChatView extends StatelessWidget {
                                   .read<ChatProvider>()
                                   .sendMessage(
                                       chats.id, _controller.text.trim(), context.read<UserProvider>().currentUser!.uid)
-                                  .then((value) => _scrollToBottom);
+                                  .whenComplete(() => _scrollToEnd()); // Bu şekilde düzeltilmelidir
+
                               _controller.clear();
                             },
-                            icon: Icon(Icons.send))
+                            icon: const Icon(Icons.send))
                       ],
                     ),
                   )

@@ -61,7 +61,7 @@ class FirebaseHelper {
     return roomRef.snapshots().map((documentSnapshot) {
       if (documentSnapshot.exists) {
         Map<String, dynamic> data = documentSnapshot.data()! as Map<String, dynamic>;
-        List<dynamic> messagesData = data['messages'] as List<dynamic> ?? [];
+        List<dynamic> messagesData = data['messages'] as List<dynamic>;
         return messagesData.map((msgData) => Message.fromJson(msgData as Map<String, dynamic>)).toList();
       } else {
         return [];

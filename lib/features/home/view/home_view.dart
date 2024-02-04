@@ -18,6 +18,10 @@ class HomeView extends StatelessWidget {
         context.read<FriendsProvider>().getAllRooms(context.read<UserProvider>().currentUser!.uid);
       },
       onPageBuilder: (UserProvider provider) => Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => context.read<UserProvider>().navigateToAllUsersView(),
+            child: Icon(Icons.person),
+          ),
           appBar: AppBar(
             title: Text(
               context.read<UserProvider>().currentUser!.uid.toLowerCase(),
@@ -54,7 +58,7 @@ class HomeView extends StatelessWidget {
                           key: ValueKey(context.watch<FriendsProvider>().rooms[index].id),
                           child: ListTile(
                             title: Text(
-                              item[index].messages[0].content,
+                              item[index].id,
                               style: context.normalTextStyle.copyWith(fontSize: 14),
                             ),
                           ),

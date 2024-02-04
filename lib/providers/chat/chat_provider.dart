@@ -17,12 +17,18 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
   StreamSubscription<List<Message>>? _chatSubscription;
   List<Message> _messages = [];
   List<Message> get messages => _messages;
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
 
   void listenToMessages(String roomId) async {
     _chatSubscription?.cancel(); // Önceki dinleyici varsa iptal et
     _chatSubscription = FirebaseHelper().listenChat(roomId).listen((newMessages) {
       _messages = newMessages;
       notifyListeners();
+      if (_messages.isNotEmpty) {
+        _isLoading = false;
+        notifyListeners();
+      }
     });
   }
 

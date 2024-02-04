@@ -25,7 +25,6 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
 
   Future<void> getAllFriends() async {
     _firends = await FirebaseHelper().getUsers();
-    print(_firends.toList().first);
     notifyListeners();
   }
 
