@@ -57,8 +57,10 @@ class ChatView extends StatelessWidget {
                     flex: 88,
                     child: Consumer<ChatProvider>(
                       builder: (context, chatProvider, child) {
-                        if (chatProvider.isLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (chatProvider.messages.isEmpty) {
+                          return const Center(
+                            child: Text('Mesaj yok!'),
+                          );
                         }
                         return ListView.builder(
                           controller: scrollController,

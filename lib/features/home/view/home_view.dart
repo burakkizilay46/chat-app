@@ -24,7 +24,7 @@ class HomeView extends StatelessWidget {
           ),
           appBar: AppBar(
             title: Text(
-              context.read<UserProvider>().currentUser!.uid.toLowerCase(),
+              'ME: ${context.read<UserProvider>().currentUser!.uid.toLowerCase()}',
               style: context.normalTextStyle.copyWith(fontSize: 14),
             ),
             actions: [
@@ -49,12 +49,15 @@ class HomeView extends StatelessWidget {
                         child: Column(
                           children: [
                             ListTile(
-                              key: ValueKey(context.watch<FriendsProvider>().rooms[index].id),
-                              title: Text(
-                                item[index].id,
-                                style: context.normalTextStyle.copyWith(fontSize: 14),
-                              ),
-                            ),
+                                key: ValueKey(context.watch<FriendsProvider>().rooms[index].id),
+                                title: Text(
+                                  "Room ID:${item[index].id}",
+                                  style: context.bigTextStyle.copyWith(fontSize: 14),
+                                ),
+                                subtitle: Text(
+                                  'Which User:${context.watch<FriendsProvider>().rooms[index].users.first}',
+                                  style: context.normalTextStyle.copyWith(fontSize: 12),
+                                )),
                             const Divider()
                           ],
                         ),

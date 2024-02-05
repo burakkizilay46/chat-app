@@ -30,6 +30,10 @@ class ChatProvider extends BaseProvider with ChangeNotifier {
         _isLoading = false;
         notifyListeners();
       }
+      if (_messages.isEmpty) {
+        _isLoading = true;
+        notifyListeners();
+      }
     });
   }
 
