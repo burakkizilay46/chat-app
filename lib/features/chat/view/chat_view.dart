@@ -10,7 +10,7 @@ import 'package:chat_app/providers/room/model/room_model.dart';
 import 'package:provider/provider.dart';
 
 class ChatView extends StatelessWidget {
-  final RoomsModel chats;
+  final RoomsModel? chats;
   const ChatView({
     Key? key,
     required this.chats,
@@ -33,7 +33,7 @@ class ChatView extends StatelessWidget {
     return BaseView(
       provider: ChatProvider(),
       onProviderReady: (ChatProvider provider) {
-        provider.listenToMessages(chats.id);
+        provider.listenToMessages(chats!.id);
       },
       onDispose: (model) {
         scrollController.dispose();
@@ -41,7 +41,7 @@ class ChatView extends StatelessWidget {
       onPageBuilder: (ChatProvider provider) {
         return Scaffold(
             appBar: AppBar(
-              title: Text(chats.id, style: context.normalTextStyle.copyWith(fontSize: 12)),
+              title: Text(chats!.id, style: context.normalTextStyle.copyWith(fontSize: 12)),
               actions: <Widget>[
                 IconButton(
                   icon: const Icon(Icons.arrow_downward),
@@ -95,7 +95,7 @@ class ChatView extends StatelessWidget {
                               context
                                   .read<ChatProvider>()
                                   .sendMessage(
-                                      chats.id, controller.text.trim(), context.read<UserProvider>().currentUser!.uid)
+                                      chats!.id, controller.text.trim(), context.read<UserProvider>().currentUser!.uid)
                                   .whenComplete(() => scrollToEnd()); // Bu şekilde düzeltilmelidir
 
                               controller.clear();

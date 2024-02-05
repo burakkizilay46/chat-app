@@ -44,17 +44,20 @@ class HomeView extends StatelessWidget {
                     itemCount: context.watch<FriendsProvider>().rooms.length,
                     itemBuilder: (context, index) {
                       var item = context.watch<FriendsProvider>().rooms;
-                      return GestureDetector(
-                        onTap: () => context.read<FriendsProvider>().navigateToChatView(),
-                        child: Card(
-                          key: ValueKey(context.watch<FriendsProvider>().rooms[index].id),
-                          child: ListTile(
-                            title: Text(
-                              item[index].id,
-                              style: context.normalTextStyle.copyWith(fontSize: 14),
+                      return Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () => context.read<FriendsProvider>().navigateToChatView(),
+                            child: ListTile(
+                              key: ValueKey(context.watch<FriendsProvider>().rooms[index].id),
+                              title: Text(
+                                item[index].id,
+                                style: context.normalTextStyle.copyWith(fontSize: 14),
+                              ),
                             ),
                           ),
-                        ),
+                          const Divider()
+                        ],
                       );
                     },
                   ),

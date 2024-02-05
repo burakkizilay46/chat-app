@@ -1,5 +1,7 @@
 import 'package:chat_app/core/base/view/base_view.dart';
+import 'package:chat_app/core/components/confirm_pop_up/pop_up.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
+import 'package:chat_app/providers/friends/friends_provider.dart';
 import 'package:chat_app/providers/user/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +18,13 @@ class AllUsers extends StatelessWidget {
         },
         onPageBuilder: (UserProvider provider) {
           return Scaffold(
-              appBar: AppBar(),
+              appBar: AppBar(
+                centerTitle: false,
+                title: Text(
+                  'Kişi Seç\n${context.read<UserProvider>().allUsers.length} Kişi',
+                  style: context.normalTextStyle.copyWith(fontSize: 12),
+                ),
+              ),
               body: Consumer(
                 builder: (context, UserProvider conProvider, child) {
                   return Center(
@@ -28,17 +36,24 @@ class AllUsers extends StatelessWidget {
                               itemCount: conProvider.allUsers.length,
                               itemBuilder: (context, index) {
                                 var item = conProvider.allUsers[index];
-                                return Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {},
-                                      child: ListTile(
+                                return GestureDetector(
+                                  onTap: () => showConfirmationDialog(
+                                      context, 'Mesaj Gönder', 'Bu kullanıcıya mesaj göndermek istiyor musunuz?', () {
+                                    context
+                                        .read<FriendsProvider>()
+                                        .createRoom([context.read<UserProvider>().currentUser!.uid, item.userId]);
+                                    Navigator.of(context).pop(false);
+                                  }),
+                                  child: Column(
+                                    children: [
+                                      ListTile(
                                         leading: CircleAvatar(backgroundImage: NetworkImage(item.photoURL!)),
-                                        title: Text(item.userId!),
+                                        title:
+                                            Text(item.userId!, style: context.normalTextStyle.copyWith(fontSize: 12)),
                                       ),
-                                    ),
-                                    const Divider(),
-                                  ],
+                                      const Divider(),
+                                    ],
+                                  ),
                                 );
                               },
                             ),

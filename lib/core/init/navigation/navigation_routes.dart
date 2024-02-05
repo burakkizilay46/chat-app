@@ -29,6 +29,7 @@ class NavigationRoute {
         return normalNavigate(const SignInView());
       case NavigationConstants.ALLUSERS:
         return normalNavigate(const AllUsers());
+
       case NavigationConstants.CHATVIEW:
         if (args.arguments is RoomsModel) {
           return normalNavigate(ChatView(chats: args.arguments! as RoomsModel));

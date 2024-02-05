@@ -68,4 +68,12 @@ class FirebaseHelper {
       }
     });
   }
+
+  Future<void> createRoom(List<String> userIDs) async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    DocumentReference room = await firestore.collection('rooms').add({'users': userIDs, 'messages': []});
+
+    print('Oda başarıyla oluşturuldu: ${room.id}');
+  }
 }
