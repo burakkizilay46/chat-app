@@ -20,8 +20,8 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
   List<RoomsModel> _rooms = [];
   List<RoomsModel> get rooms => _rooms;
 
-  void navigateToChatView() {
-    navigation.navigateToPage(path: NavigationConstants.CHATVIEW, data: _rooms[0]);
+  void navigateToChatView(int index) {
+    navigation.navigateToPage(path: NavigationConstants.CHATVIEW, data: _rooms[index]);
   }
 
   Future<void> getAllFriends() async {
