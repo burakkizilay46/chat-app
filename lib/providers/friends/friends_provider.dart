@@ -36,17 +36,17 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
 
   RoomsModel? checkRoomExists(List<RoomsModel> _rooms, List<String> userIDS) {
     for (var room in _rooms) {
-      // _rooms listesinde iterasyon yapılıyor.
-      // Kullanıcı listesinde userIDS listesindeki herhangi bir ID var mı kontrol et.
-      for (String userID in userIDS) {
-        if (room.users.contains(userID)) {
-          print('Böyle bir oda var!');
-          return room; // Eşleşen oda bulunduğunda odayı döndür.
-        }
+      var roomUserSet = room.users.toSet(); // Oda kullanıcılarını bir Set'e çevir.
+      var userIdsSet = userIDS.toSet(); // Gelen kullanıcı ID'lerini bir Set'e çevir.
+
+      if (roomUserSet.length == userIdsSet.length &&
+          roomUserSet.intersection(userIdsSet).length == roomUserSet.length) {
+        print('Tam eşleşen bir oda var!');
+        return room; // Tam eşleşme sağlanan oda.
       }
     }
 
-    print('Böyle bir oda yok!'); // Eşleşme bulunamazsa bu mesajı yazdır.
+    print('Tam eşleşen bir oda yok!'); // Eşleşme bulunamazsa bu mesajı yazdır.
     return null; // Eşleşme bulunamazsa null döndür.
   }
 
