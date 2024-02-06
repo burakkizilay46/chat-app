@@ -34,39 +34,33 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool checkRoomExists(List<RoomsModel> _rooms, List<String> userIDS) {
-    bool roomExists = false; // Oda bulunup bulunmadığını takip etmek için bir flag.
-
+  RoomsModel? checkRoomExists(List<RoomsModel> _rooms, List<String> userIDS) {
     for (var room in _rooms) {
       // _rooms listesinde iterasyon yapılıyor.
       // Kullanıcı listesinde userIDS listesindeki herhangi bir ID var mı kontrol et.
       for (String userID in userIDS) {
         if (room.users.contains(userID)) {
           print('Böyle bir oda var!');
-          roomExists = true; // Eşleşme bulunduğunda flag'i güncelle.
-          break; // İç döngüden çık.
+          return room; // Eşleşen oda bulunduğunda odayı döndür.
         }
       }
-      if (roomExists) break; // Dış döngüden çık.
     }
 
-    if (!roomExists) {
-      print('Böyle bir oda yok!'); // Eşleşme bulunamazsa bu mesajı yazdır.
-    }
-
-    return roomExists;
+    print('Böyle bir oda yok!'); // Eşleşme bulunamazsa bu mesajı yazdır.
+    return null; // Eşleşme bulunamazsa null döndür.
   }
 
   Future<void> createRoom(List<String> userIDS) async {
-    if (checkRoomExists(_rooms, userIDS)) {
-      navigateToAlreadyChat();
+    var room = checkRoomExists(_rooms, userIDS);
+    if (room != null) {
+      navigateToAlreadyChat(room); // Eğer room null değilse, o odaya navigasyon yap.
     } else {
-      FirebaseHelper().createRoom(userIDS);
-      getAllFriends();
+      await FirebaseHelper().createRoom(userIDS); // Yeni oda oluştur.
+      getAllRooms(userIDS.first); // Arkadaş listesini güncelle/getir.
     }
   }
 
-  void navigateToAlreadyChat() {
-    navigation.navigateToPage(path: NavigationConstants.CHATVIEW, data: 'adsasd');
+  void navigateToAlreadyChat(RoomsModel room) {
+    navigation.navigateToPage(path: NavigationConstants.CHATVIEW, data: room);
   }
 }

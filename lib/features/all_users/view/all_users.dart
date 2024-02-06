@@ -37,13 +37,9 @@ class AllUsers extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 var item = conProvider.allUsers[index];
                                 return GestureDetector(
-                                  onTap: () => showConfirmationDialog(
-                                      context, 'Mesaj Gönder', 'Bu kullanıcıya mesaj göndermek istiyor musunuz?', () {
-                                    context
-                                        .read<FriendsProvider>()
-                                        .createRoom([context.read<UserProvider>().currentUser!.uid, item.userId]);
-                                    Navigator.of(context).pop(false);
-                                  }),
+                                  onTap: () => context
+                                      .read<FriendsProvider>()
+                                      .createRoom([context.read<UserProvider>().currentUser!.uid, item.userId]),
                                   child: Column(
                                     children: [
                                       ListTile(
