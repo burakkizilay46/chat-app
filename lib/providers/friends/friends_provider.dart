@@ -34,7 +34,39 @@ class FriendsProvider extends BaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  bool checkRoomExists(List<RoomsModel> _rooms, List<String> userIDS) {
+    bool roomExists = false; // Oda bulunup bulunmadığını takip etmek için bir flag.
+
+    for (var room in _rooms) {
+      // _rooms listesinde iterasyon yapılıyor.
+      // Kullanıcı listesinde userIDS listesindeki herhangi bir ID var mı kontrol et.
+      for (String userID in userIDS) {
+        if (room.users.contains(userID)) {
+          print('Böyle bir oda var!');
+          roomExists = true; // Eşleşme bulunduğunda flag'i güncelle.
+          break; // İç döngüden çık.
+        }
+      }
+      if (roomExists) break; // Dış döngüden çık.
+    }
+
+    if (!roomExists) {
+      print('Böyle bir oda yok!'); // Eşleşme bulunamazsa bu mesajı yazdır.
+    }
+
+    return roomExists;
+  }
+
   Future<void> createRoom(List<String> userIDS) async {
-    FirebaseHelper().createRoom(userIDS);
+    if (checkRoomExists(_rooms, userIDS)) {
+      navigateToAlreadyChat();
+    } else {
+      FirebaseHelper().createRoom(userIDS);
+      getAllFriends();
+    }
+  }
+
+  void navigateToAlreadyChat() {
+    navigation.navigateToPage(path: NavigationConstants.CHATVIEW, data: 'adsasd');
   }
 }
