@@ -1,5 +1,6 @@
 import 'package:chat_app/core/base/provider/base_provider.dart';
 import 'package:chat_app/core/constants/navigation/navigation_constants.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,8 +15,8 @@ class SplashProvider extends BaseProvider with ChangeNotifier {
 
   @override
   void init() async {
+    checkInternetConnection();
     await Future.delayed(const Duration(seconds: 2));
-    navigateToPages();
   }
 
   Future<void> navigateToPages() async {
@@ -28,5 +29,14 @@ class SplashProvider extends BaseProvider with ChangeNotifier {
         : await navigation.navigateToPageClear(path: NavigationConstants.SIGNIN);
 
     box.close();
+  }
+
+  void checkInternetConnection() async {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      print('İnternet Bağlantısı Yok!');
+    } else {
+      navigateToPages();
+    }
   }
 }
