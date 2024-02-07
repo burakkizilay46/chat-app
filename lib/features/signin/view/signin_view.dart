@@ -28,7 +28,8 @@ class SignInView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Sign In With Google!',
-                          style: context.normalTextStyle.copyWith(fontSize: 32, color: context.appWhite)),
+                          textAlign: TextAlign.center,
+                          style: context.normalTextStyle.copyWith(fontSize: 28, color: context.appWhite)),
                       ElevatedButton(
                           onPressed: () => context.read<UserProvider>().signIn(),
                           child: Row(

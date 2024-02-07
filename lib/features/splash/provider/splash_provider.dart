@@ -15,8 +15,8 @@ class SplashProvider extends BaseProvider with ChangeNotifier {
 
   @override
   void init() async {
-    checkInternetConnection();
     await Future.delayed(const Duration(seconds: 2));
+    checkInternetConnection();
   }
 
   Future<void> navigateToPages() async {
