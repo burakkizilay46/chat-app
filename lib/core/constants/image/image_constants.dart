@@ -6,6 +6,7 @@ class ImageConstants {
 
   ImageConstants._init();
   String get googleLogo => toPng('logo/google-logo');
+  String get appLogo => toPng('logo/app_logo');
 
   String toPng(String name) => 'assets/images/$name.png';
 }

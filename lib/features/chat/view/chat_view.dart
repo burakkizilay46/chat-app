@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:chat_app/core/base/view/base_view.dart';
+import 'package:chat_app/core/components/appbar/custom_appbar.dart';
 import 'package:chat_app/core/components/chat_bubble/chat_bubble_view.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 import 'package:chat_app/providers/chat/chat_provider.dart';
@@ -40,7 +41,7 @@ class ChatView extends StatelessWidget {
       },
       onPageBuilder: (ChatProvider provider) {
         return Scaffold(
-            appBar: AppBar(
+            appBar: CustomAppBar(
               title: Text(chats!.id, style: context.normalTextStyle.copyWith(fontSize: 12)),
               actions: <Widget>[
                 IconButton(

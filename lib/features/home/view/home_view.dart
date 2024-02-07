@@ -1,4 +1,5 @@
 import 'package:chat_app/core/base/view/base_view.dart';
+import 'package:chat_app/core/components/appbar/custom_appbar.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 import 'package:chat_app/providers/friends/friends_provider.dart';
 import 'package:chat_app/providers/user/provider/user_provider.dart';
@@ -22,7 +23,7 @@ class HomeView extends StatelessWidget {
             onPressed: () => context.read<UserProvider>().navigateToAllUsersView(),
             child: const Icon(Icons.person),
           ),
-          appBar: AppBar(
+          appBar: CustomAppBar(
             title: Text(
               'ME: ${context.read<UserProvider>().currentUser!.uid.toLowerCase()}',
               style: context.normalTextStyle.copyWith(fontSize: 14),

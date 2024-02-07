@@ -1,5 +1,6 @@
 import 'package:chat_app/core/base/view/base_view.dart';
-import 'package:chat_app/core/components/confirm_pop_up/pop_up.dart';
+import 'package:chat_app/core/components/appbar/custom_appbar.dart';
+
 import 'package:chat_app/core/extensions/context_extansion.dart';
 import 'package:chat_app/providers/friends/friends_provider.dart';
 import 'package:chat_app/providers/user/provider/user_provider.dart';
@@ -18,11 +19,10 @@ class AllUsers extends StatelessWidget {
         },
         onPageBuilder: (UserProvider provider) {
           return Scaffold(
-              appBar: AppBar(
-                centerTitle: false,
+              appBar: CustomAppBar(
                 title: Text(
-                  'Kişi Seç\n${context.read<UserProvider>().allUsers.length} Kişi',
-                  style: context.normalTextStyle.copyWith(fontSize: 12),
+                  'Kişi Seç',
+                  style: context.normalTextStyle,
                 ),
               ),
               body: Consumer(

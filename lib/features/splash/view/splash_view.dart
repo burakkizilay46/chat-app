@@ -1,3 +1,4 @@
+import 'package:chat_app/core/constants/image/image_constants.dart';
 import 'package:chat_app/core/extensions/context_extansion.dart';
 import 'package:chat_app/features/splash/provider/splash_provider.dart';
 import 'package:flutter/material.dart';
@@ -23,12 +24,29 @@ class _SplashContent extends StatelessWidget {
     // ignore: unused_local_variable
     final splashProvider = Provider.of<SplashProvider>(context);
     return Scaffold(
-      backgroundColor: context.appColor,
-      body: Center(
-          child: Text(
-        'Welcome Chat App',
-        style: context.normalTextStyle.copyWith(color: context.appWhite),
-      )),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.purpleAccent.shade400, // Başlangıç rengi
+              Colors.deepPurple.shade900, // Bitiş rengi
+            ],
+          ),
+        ),
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(ImageConstants.instance.appLogo),
+            Text(
+              'Welcome Chat App',
+              style: context.normalTextStyle.copyWith(color: context.appWhite, fontSize: 16),
+            ),
+          ],
+        )),
+      ),
     );
   }
 }
